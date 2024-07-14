@@ -1,0 +1,21 @@
+install Python-telegram-bot
+from telegram.ext import Updater, MessageHandler, Filters
+
+def delete_link(update, context):
+    for entity in update.message.entities:
+        if entity.type in ["url", "text_link"]:
+            update.message.delete()
+            break
+
+def main():
+    TOKEN = '7204246881:AAFOrZv9vqUF_R4B5oqjFf7XxTW-azCewyI'
+    updater = Updater(TOKEN, use_context=True)
+
+    dp = updater.dispatcher
+    dp.add_handler(MessageHandler(Filters.entity("url"), delete_link))
+
+    updater.start_polling()
+    updater.idle()
+
+if name == 'main':
+    main()
